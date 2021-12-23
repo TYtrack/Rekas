@@ -1,0 +1,9 @@
+{
+    "go.alternateTools": {
+    
+    },
+    "go.testFlags": [
+        "-v"
+    ],
+    "go.testTags": ""
+}
