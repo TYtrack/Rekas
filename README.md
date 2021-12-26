@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-12-23 00:55:53
- * @LastEditTime: 2021-12-26 19:54:16
+ * @LastEditTime: 2021-12-26 20:03:00
  * @LastEditors: TYtrack
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /Rekas/README.md
@@ -23,3 +23,6 @@
 - <del>使用Viper库实现配置解析管理</del>
 - <del>利用锁机制防止缓存击穿</del>
 - 使用布隆过滤器实现缓存穿透【集成中】
+
+<br>
+现已加入GitHub CI/CD 服务
