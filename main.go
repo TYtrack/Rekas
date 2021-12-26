@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-12-23 12:41:15
- * @LastEditTime: 2021-12-26 17:45:38
+ * @LastEditTime: 2021-12-26 19:29:34
  * @LastEditors: TYtrack
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /Rekas/main.go
@@ -11,13 +11,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go_code/Rekas/heartbeat"
 	master "go_code/Rekas/master_server"
 	netconn "go_code/Rekas/net_conn"
 	cache "go_code/Rekas/rekas_cache"
 	"log"
 	"net/http"
-	"time"
 )
 
 var db = map[string]string{
@@ -55,7 +53,7 @@ func startMasterServer(addr string, g1 *cache.Group) {
 	p1 := netconn.NewHTTPPool(addr)
 	m_master := master.NewMasterServer(g1, p1)
 	m_master.AutoLookServer(nil)
-	fmt.Println("[ Main ] all server :   ", m_master.ServerMap)
+	fmt.Println("[ Main ] all server :   ", m_master.ServerList)
 
 	log.Println("geecache is running at", addr)
 	log.Fatal(http.ListenAndServe(addr[7:], p1))
@@ -65,25 +63,6 @@ func startCacheServer(addr string, addrs []string, gee *cache.Group) {
 	peers := netconn.NewHTTPPool(addr)
 	peers.Set(addrs...)
 	gee.RegisterPeers(peers)
-	peers.PrintServer()
-
-	peers.Add("http://localhost:8005")
-	gee.AgainRegisterPeers(peers)
-	peers.PrintServer()
-
-	peers.Delete("http://localhost:8002")
-	gee.AgainRegisterPeers(peers)
-	peers.PrintServer()
-
-	go func() {
-		tt := true
-		for tt {
-			addrs := []string{"http://0.0.0.0:8000", "http://0.0.0.0:8001", "http://0.0.0.0:8002", "http://0.0.0.0:8003", "http://0.0.0.0:8004", "http://0.0.0.0:8005"}
-			res := heartbeat.FixingSendHeartBeat(addrs)
-			fmt.Println("########", res)
-			time.Sleep(time.Second * 10)
-		}
-	}()
 
 	log.Println("geecache is running at", addr)
 	log.Fatal(http.ListenAndServe(addr[7:], peers))
@@ -126,8 +105,6 @@ func main() {
 		8003: "http://0.0.0.0:8003",
 	}
 
-	fmt.Println(addrMap)
-
 	var addrs []string
 	for _, v := range addrMap {
 		addrs = append(addrs, v)
@@ -141,7 +118,7 @@ func main() {
 	if master {
 		go startMasterServer(addrMap[port], gee)
 	}
-	startMasterServer(addrMap[port], gee)
+	//startMasterServer(addrMap[port], gee)
 
-	//startCacheServer(addrMap[port], []string(addrs), gee)
+	startCacheServer(addrMap[port], []string(addrs), gee)
 }
