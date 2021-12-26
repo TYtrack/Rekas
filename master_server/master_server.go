@@ -3,7 +3,7 @@
  * @Description: ...
  * @Date: 2021-12-23 21:31:46
  * @LastEditors: TYtrack
- * @LastEditTime: 2021-12-26 19:20:24
+ * @LastEditTime: 2021-12-26 20:12:22
  * @FilePath: /Rekas/master_server/master_server.go
  */
 
@@ -47,7 +47,7 @@ func NewMasterServer(g1 *cache.Group, p1 *netconn.HTTPPool) (m_server *MasterSer
 func readAllServerFromConfig() (res []string) {
 	viper.SetConfigName("config")
 	viper.SetConfigType("toml")
-	viper.AddConfigPath("./")
+	viper.AddConfigPath("../")
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatalf("read config failed: %v", err)
