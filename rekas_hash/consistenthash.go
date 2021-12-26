@@ -1,7 +1,7 @@
 /*
  * @Author: TYtrack
  * @Date: 2021-12-23 14:07:43
- * @LastEditTime: 2021-12-23 22:37:12
+ * @LastEditTime: 2021-12-26 19:29:00
  * @LastEditors: TYtrack
  * @Description: 一致性哈希
  * @FilePath: /Rekas/rekas_hash/consistenthash.go
@@ -42,7 +42,7 @@ func NewHash(replicas int, fn Hash) *V2RMap {
 
 // Add adds some keys to the hash.
 func (m *V2RMap) Add(keys ...string) {
-	fmt.Println("*****", keys)
+
 	for _, key := range keys {
 		for i := 0; i < m.replicas; i++ {
 			hash := int(m.hash([]byte(strconv.Itoa(i) + key)))
