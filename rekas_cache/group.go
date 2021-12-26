@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-12-23 12:37:45
- * @LastEditTime: 2021-12-23 17:11:13
+ * @LastEditTime: 2021-12-26 15:45:22
  * @LastEditors: TYtrack
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /Rekas/rekas_cache/group.go
@@ -31,14 +31,6 @@ var (
 	groups = make(map[string]*Group)
 )
 
-// RegisterPeers registers a PeerPicker for choosing remote peer
-func (g *Group) RegisterPeers(peers PeerPicker) {
-	if g.peers != nil {
-		panic("RegisterPeerPicker called more than once")
-	}
-	g.peers = peers
-}
-
 // NewGroup create a new instance of Group
 func NewGroup(name string, cacheBytes int64, getter Getter) *Group {
 	if getter == nil {
@@ -64,6 +56,24 @@ func GetGroup(name string) *Group {
 	g := groups[name]
 	mu.RUnlock()
 	return g
+}
+
+// RegisterPeers registers a PeerPicker for choosing remote peer
+func (g *Group) RegisterPeers(peers PeerPicker) {
+	if g.peers != nil {
+		panic("RegisterPeerPicker called more than once")
+	}
+	g.peers = peers
+}
+
+// RegisterPeers registers a PeerPicker for choosing remote peer
+func (g *Group) AgainRegisterPeers(peers PeerPicker) {
+	if g.peers == nil {
+		g.RegisterPeers(peers)
+	} else {
+		g.peers = peers
+	}
+
 }
 
 // Get value for a key from cache
