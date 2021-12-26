@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-12-23 13:36:09
- * @LastEditTime: 2021-12-23 16:58:42
+ * @LastEditTime: 2021-12-26 20:10:11
  * @LastEditors: TYtrack
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /Rekas/net_conn/net_conn_test.go
@@ -12,7 +12,6 @@ import (
 	"fmt"
 	cache "go_code/Rekas/rekas_cache"
 	"log"
-	"net/http"
 	"testing"
 )
 
@@ -33,7 +32,7 @@ func TestHttp(t *testing.T) {
 		}))
 
 	addr := "localhost:9999"
-	peers := NewHTTPPool(addr)
+	NewHTTPPool(addr)
 	log.Println("geecache is running at", addr)
-	log.Fatal(http.ListenAndServe(addr, peers))
+	//log.Fatal(http.ListenAndServe(addr, peers))
 }
