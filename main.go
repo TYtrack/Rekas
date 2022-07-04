@@ -6,15 +6,15 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /Rekas/main.go
  */
-package main
+package Rekas
 
 import (
 	"flag"
 	"fmt"
-	bloomx "go_code/Rekas/bloomx"
 	master "go_code/Rekas/master_server"
 	netconn "go_code/Rekas/net_conn"
 	cache "go_code/Rekas/rekas_cache"
+
 	"log"
 	"net/http"
 )
@@ -87,13 +87,10 @@ func startAPIServer(apiAddr string, gee *cache.Group) {
 
 }
 
-var cf *bloomx.CuckBloom
-
 func main() {
 	var port int
 	var api bool
 	var master bool
-	cf = bloomx.NewCuckBloom(1000)
 
 	flag.IntVar(&port, "port", 8001, "Geecache server port")
 	flag.BoolVar(&api, "api", false, "Start a api server?")
