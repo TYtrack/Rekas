@@ -30,3 +30,13 @@ func TestBloomx(t *testing.T) {
 	fmt.Println(filter.Contains(str3))
 	fmt.Println(filter.Contains("blockchain technology"))
 }
+func TestCuckoofilter(t *testing.T) {
+	cf := NewCuckBloom(1000)
+	fmt.Println(cf.Bloom.Count())
+	cf.Insert([]byte("hello"))
+	fmt.Println(cf.Bloom.Count())
+	cf.Insert([]byte("world"))
+	fmt.Println(cf.Bloom.Count())
+	cf.Delete([]byte("hello"))
+	fmt.Println(cf.Bloom.Count())
+}

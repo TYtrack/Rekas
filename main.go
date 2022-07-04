@@ -11,6 +11,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	bloomx "go_code/Rekas/bloomx"
 	master "go_code/Rekas/master_server"
 	netconn "go_code/Rekas/net_conn"
 	cache "go_code/Rekas/rekas_cache"
@@ -86,10 +87,14 @@ func startAPIServer(apiAddr string, gee *cache.Group) {
 
 }
 
+var cf *bloomx.CuckBloom
+
 func main() {
 	var port int
 	var api bool
 	var master bool
+	cf = bloomx.NewCuckBloom(1000)
+
 	flag.IntVar(&port, "port", 8001, "Geecache server port")
 	flag.BoolVar(&api, "api", false, "Start a api server?")
 	flag.BoolVar(&master, "master", false, "Is this server a Master?")
